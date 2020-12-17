@@ -1,0 +1,22 @@
+{
+  "name": "@qjwvtd/think-store",
+  "version": "1.3.0",
+  "description": "仅用redux和react hook实现的迷你状态管理器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "redux",
+    "react",
+    "state",
+    "hook"
+  ],
+  "author": "qjwvtd",
+  "license": "MIT",
+  "repository": "https://github.com/qjwvtd/think-store.git",
+  "dependencies": {
+    "react": "^17.0.1",
+    "redux": "^4.0.5"
+  }
+}
