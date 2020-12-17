@@ -1,6 +1,6 @@
 {
   "name": "@qjwvtd/think-store",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "仅用redux和react hook实现的迷你状态管理器",
   "main": "index.js",
   "scripts": {

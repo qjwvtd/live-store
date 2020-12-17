@@ -25,6 +25,8 @@ const { useStore, applyStore } = ThinkStore({reducer1,reducer2,...});
  * 
  * useStore因其依赖了react的effect订阅store,所以不能在使用在非hook组件外面
  * 
+ * store不需要从顶层组件注入
+ * 
  * 注:使用这个包,你必须接受使用react hook来开发你的项目
  */
 
@@ -58,6 +60,9 @@ export default (state = initState, action) => {
     }
     return Object.assign({}, state);
 };
+```
+
+```js
 //goods.js
 //initstate
 const initState = {
@@ -83,6 +88,9 @@ export default (state = initState, action) => {
     }
     return Object.assign({}, state);
 };
+```
+
+```js
 //store.js
 import ThinkStore from '@qjwvtd/think-store'
 import project from './project.js'
@@ -94,6 +102,15 @@ export default ThinkStore(reducer);
 const reducer = {project,goods};
 const { useStore, applyStore } = ThinkStore(reducer);
 export default {useStore, applyStore};
-
-
 ```
+
+```js
+//app.js
+function App(){
+    {state,dispatch} = useStore();
+    return <div>{JSN.strinfy(state)}</div>; 
+}
+ReactDOM.render(
+    <App />,document.body
+);
+````
