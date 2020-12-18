@@ -1,8 +1,8 @@
 # live-store
 
-### 仅用redux和react hook封装的迷你状态管理器
+### 仅用redux和react hook封装的迷你状态管理器,只用一个api,就能实现全局/局部状态管理
 
-## Installation
+## installation
 
 To install the stable version:
 
@@ -96,11 +96,14 @@ export const useCustomApplyStore = applyStore;
 ```
 
 ```js
-function anyncRequest(){
+import getGoodsDataApi from './api';
+function asyncRequest(params){
     //异步调用
     const [, dispatch] = applyStore();
-    const action = {type: 'xxx',data: {}};
-    dispatch(action);
+    getGoodsDataApi(params).then((data) => {
+        const action = {type: 'update_goods_data',data: data};
+        dispatch(action);
+    });
 }
 //app.js
 function App(){
@@ -111,7 +114,7 @@ function App(){
     const [state] = useStore();
     //async
     useEffect(() => {
-        anyncRequest();
+        asyncRequest(1);
     },[]);
     return <div>{state}</div>; 
 }

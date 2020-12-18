@@ -1,6 +1,6 @@
 {
   "name": "live-store",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "redux和react hook迷你状态管理器",
   "main": "index.js",
   "scripts": {
