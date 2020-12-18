@@ -1,4 +1,4 @@
-# @qjwvtd/think-store
+# live-store
 
 ### 仅用redux和react hook封装的迷你状态管理器
 
@@ -7,26 +7,26 @@
 To install the stable version:
 
 ```sh
-npm install --save-dev @qjwvtd/think-store
+npm install --save-dev live-store
 ```
 
 That's it!
 ```js
-import createThinkStore from '@qjwvtd/think-store';
+import createLiveStore from 'live-store';
 
-const [useStore, applyStore] = createThinkStore({reducer1,reducer2,...});
+const [useStore, applyStore] = createLiveStore({reducer1,reducer2,...});
 ```
 
 ### 注意:
-### useStore依赖了react的effect订阅store,所以不能在非hook组件外面使用
-### 没有从项层注入store的Provider,也没有绕人的connect
-### 使用这个工具,你必须接受使用react hook来开发你的项目
+useStore依赖了react的effect订阅store,所以不能在非hook组件外面使用,
+没有从顶层注入store的Provider,也没有绕人的connect
+使用这个工具,你必须接受使用react hooks来开发你的项目
 
 ```js
 //useStore在组件内部使用 
 function App(){
     const [state,dispatch] = useStore();
-    return <div></div>;
+    return <div>{state}</div>;
 }
 //applyStore在外部使用,比如在封装的请求函数或其它工具函数中使用
 function asyncRequest(){
@@ -76,17 +76,17 @@ export default (state = initState, action) => {
     return Object.assign({}, state);
 };
 ```
-### 通过createThinkStore,你可以创建不同的状态管理器,既可以是全局的,也可以是局部的
+### 通过createLiveStore,你可以创建不同的状态管理器,既可以是全局的,也可以是局部的
 
 ### store.js
 ```js
-import createThinkStore from '@qjwvtd/think-store'
+import createLiveStore from 'live-store';
 //import reducer
 import project from './project';
 import good from './goods';
 //merge reducer
 const reducer = { project, good };
-const [useStore, applyStore] = createThinkStore(reducer);
+const [useStore, applyStore] = createLiveStore(reducer);
 //or
 export { useStore, applyStore };
 //你还可以别名

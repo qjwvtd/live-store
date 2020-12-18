@@ -7,7 +7,7 @@ import { createStore, combineReducers } from 'redux';
  * 如: {reducer1,reducer2,...}
  * 关于return []和return {}的区别,返回数组在命名时可以别名,map对象则不能
  */
-export default function createThinkStore(reducersMap) {
+export default function createLiveStore(reducersMap) {
     //create reducer
     let reducer = combineReducers(reducersMap);
     let store = createStore(reducer, {});
