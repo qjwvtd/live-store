@@ -18,10 +18,10 @@ const { useStore, applyStore } = ThinkStore({reducer1,reducer2,...});
 
 /**
  * useStore在组件内部使用
- * const {state,dispatch} = useStore();
+ * const [state,dispatch] = useStore();
  * 
  * applyStore在外部使用,比如在封装的请求函数或其它工具函数中使用
- * const {state,dispatch} = applyStore();
+ * const [state,dispatch] = applyStore();
  * 
  * useStore因其依赖了react的effect订阅store,所以不能在使用在非hook组件外面
  * 
@@ -92,22 +92,33 @@ export default (state = initState, action) => {
 
 ```js
 //store.js
-import ThinkStore from '@qjwvtd/think-store'
-import project from './project.js'
-import goods from './goods.js'
+import createThinkStore from '@qjwvtd/think-store'
 
-const reducer = {project,goods};
-export default ThinkStore(reducer);
-//or
-const reducer = {project,goods};
-const { useStore, applyStore } = ThinkStore(reducer);
-export default {useStore, applyStore};
+//import reducer
+import project from './project';
+import good from './good';
+//merge reducer
+const reducer = { project, good };
+const [useStore, applyStore] = createThinkStore(reducer);
+export { useStore, applyStore };
 ```
 
 ```js
+function otherFN(){
+    //异步调用
+    const [, dispatch] = applyStore();
+    const action = {type: 'xxx',data: {}};
+    dispatch(action);
+}
 //app.js
 function App(){
-    {state,dispatch} = useStore();
+    const [state, dispatch] = useStore();
+    //or
+    const [, dispatch] = useStore();
+    //or
+    const [state] = useStore();
+    //async
+    otherFN();
     return <div>{JSN.strinfy(state)}</div>; 
 }
 ReactDOM.render(
