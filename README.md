@@ -1,5 +1,7 @@
 # @qjwvtd/think-store
 
+### 仅用redux和react hook封装的迷你状态管理器
+
 ## Installation
 
 To install the stable version:
@@ -8,19 +10,19 @@ To install the stable version:
 npm install --save-dev @qjwvtd/think-store
 ```
 
-
 That's it!
-
 ```js
-/**
- * useStore因其依赖了react的effect订阅store,所以不能在使用在非hook组件外面
- * store不需要从顶层组件注入
- * 注意:使用这个包,你必须接受使用react hook来开发你的项目
- */
 import createThinkStore from '@qjwvtd/think-store';
 
 const [useStore, applyStore] = createThinkStore({reducer1,reducer2,...});
+```
 
+### 注意:
+### useStore依赖了react的effect订阅store,所以不能在非hook组件外面使用
+### 没有从项层注入store的Provider,也没有绕人的connect
+### 使用这个工具,你必须接受使用react hook来开发你的项目
+
+```js
 //useStore在组件内部使用 
 function App(){
     const [state,dispatch] = useStore();
@@ -34,12 +36,7 @@ function asyncRequest(){
     },2000);
 }
 ```
-
-### 通过一个函数createThinkStore,你可以创建不同的状态管理器,既可以是全局的,也可以是局部的
-
-
 ## Example
-
 ### project.js
 ```js
 //initstate
@@ -79,6 +76,7 @@ export default (state = initState, action) => {
     return Object.assign({}, state);
 };
 ```
+### 通过createThinkStore,你可以创建不同的状态管理器,既可以是全局的,也可以是局部的
 
 ### store.js
 ```js
