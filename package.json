@@ -1,6 +1,6 @@
 {
   "name": "live-store",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "redux和react hook迷你状态管理器",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -21,6 +21,10 @@
   "author": "qjwvtd",
   "license": "MIT",
   "repository": "https://github.com/qjwvtd/live-store.git",
+  "dependencies": {
+    "react": "^17.0.1",
+    "redux": "^4.0.5"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "babel-eslint": "^10.1.0",
@@ -28,9 +32,7 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-eslint": "^6.0.0",
-    "gulp-uglify": "^3.0.2",
-    "react": "^17.0.1",
-    "redux": "^4.0.5"
+    "gulp-uglify": "^3.0.2"
   },
   "npmcmd": {
     "login": "npm login",
