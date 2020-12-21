@@ -10,5 +10,5 @@ gulp.task("build", function () {
         .pipe(eslint())//eslint检查
         .pipe(babel())//编译
         .pipe(uglify())//压缩
-        .pipe(gulp.dest("es")); //转换成ES5存放的路径
+        .pipe(gulp.dest("dist")); //转换成ES5存放的路径
 });
