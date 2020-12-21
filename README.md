@@ -18,9 +18,9 @@ const [useStore, applyStore] = createLiveStore({reducer1,reducer2,...});
 ```
 
 ### 注意:
-useStore依赖了react的effect订阅store,所以不能在非hook组件外面使用,
-没有从顶层注入store的Provider,也没有绕人的connect
-使用这个工具,你必须接受使用react hooks来开发你的项目
+useStore依赖了react的effect订阅store,所以不能在非hook组件外使用,
+没有从顶层注入store的Provider,也没有绕人的connect.使用这个工具,
+你必须接受使用react hooks来开发你的项目
 
 ```js
 //useStore在组件内部使用 
@@ -96,7 +96,7 @@ export const useCustomApplyStore = applyStore;
 ```
 
 ```js
-import getGoodsDataApi from './api';
+import {getGoodsDataApi} from './api';
 function asyncRequest(params){
     //异步调用
     const [, dispatch] = applyStore();
