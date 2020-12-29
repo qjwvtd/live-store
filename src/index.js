@@ -36,7 +36,7 @@ export default function createLiveStore(reducersMap) {
          * const [state, dispatch] = applyStore();
          * 用于异步更新数据: dispatch({type: 'xxx',...});
          */
-        return [store.getState, store.dispatch];
+        return [store.getState(), store.dispatch];
     }
     return [useStore, applyStore];
 }
