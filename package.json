@@ -1,41 +1,67 @@
 {
-  "name": "live-store",
-  "version": "0.5.6",
-  "description": "redux和react hook迷你状态管理器",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "scripts": {
-    "build": "gulp build",
-    "send": "npm publish --access=public",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "redux",
-    "react",
-    "state",
-    "hook"
-  ],
-  "files": [
-    "es"
-  ],
-  "author": "qjwvtd",
-  "license": "MIT",
-  "repository": "https://github.com/qjwvtd/live-store.git",
-  "dependencies": {
-    "react": "^17.0.1",
-    "redux": "^4.0.5"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "babel-eslint": "^10.1.0",
-    "babel-preset-env": "^1.7.0",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-eslint": "^6.0.0",
-    "gulp-uglify": "^3.0.2"
-  },
-  "npmcmd": {
-    "login": "npm login",
-    "push": "npm publish --access=public"
-  }
+    "name": "live-store",
+    "version": "0.5.8",
+    "description": "redux和react hook迷你状态管理器",
+    "main": "index.js",
+    "module": "index.js",
+    "scripts": {
+        "build": "npm run lint && webpack",
+        "send": "npm publish --access=public",
+        "lint": "eslint --fix --ext .js,.jsx src",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "redux",
+        "react",
+        "state",
+        "hook"
+    ],
+    "files": [
+        "dist"
+    ],
+    "author": "qjwvtd",
+    "license": "MIT",
+    "repository": "https://github.com/qjwvtd/live-store.git",
+    "devDependencies": {
+        "@babel/cli": "^7.12.10",
+        "@babel/core": "^7.12.10",
+        "@babel/plugin-transform-react-jsx": "^7.10.4",
+        "@babel/plugin-transform-react-jsx-self": "^7.10.4",
+        "@babel/preset-env": "^7.12.10",
+        "@babel/preset-react": "^7.10.4",
+        "babel-eslint": "^9.0.0",
+        "babel-loader": "^8.2.2",
+        "clean-webpack-plugin": "^0.1.19",
+        "eslint": "^4.19.1",
+        "eslint-friendly-formatter": "^4.0.1",
+        "eslint-loader": "^2.2.1",
+        "eslint-plugin-babel": "^5.3.1",
+        "eslint-plugin-html": "^6.1.1",
+        "eslint-plugin-react": "^7.21.5",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "redux": "^4.0.5",
+        "terser-webpack-plugin": "^3.1.0",
+        "webpack": "^4.44.2",
+        "webpack-cli": "^3.3.12"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0",
+        "redux": "3.0.0"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-react",
+            "@babel/preset-env"
+        ],
+        "plugins": [
+            "@babel/plugin-transform-react-jsx"
+        ]
+    },
+    "npmcmd": {
+        "login": "npm login",
+        "push": "npm publish --access=public"
+    }
 }

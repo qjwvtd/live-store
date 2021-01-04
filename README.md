@@ -1,6 +1,7 @@
 # live-store
 
-### 仅用redux和react hook封装的迷你状态管理器,只用一个api,就能实现全局/局部状态管理
+#### With only one API, the mini state manager encapsulated by Redux and react hook can realize global / local state management
+#### 只用redux和react hook封装的迷你状态管理器,只用一个api,就能实现全局/局部状态管理
 
 ## installation
 
@@ -18,17 +19,21 @@ const [useStore, applyStore] = createLiveStore({reducer1,reducer2,...});
 ```
 
 ### 注意:
+useStore relies on react's effect subscription store, so it can't be used outside non hook components,
+There is no Provider injected into the store from the top level, and there is no connection around people,
+You have to accept using react hooks to develop your project
+
 useStore依赖了react的effect订阅store,所以不能在非hook组件外使用,
 没有从顶层注入store的Provider,也没有绕人的connect.使用这个工具,
 你必须接受使用react hooks来开发你的项目
 
 ```js
-//useStore在组件内部使用 
+//useStore,component inner
 function App(){
     const [state,dispatch] = useStore();
     return <div>{state}</div>;
 }
-//applyStore在外部使用,比如在封装的请求函数或其它工具函数中使用
+//applyStore,component out
 function asyncRequest(){
     const [state,dispatch] = applyStore();
     setimeout(() => {
@@ -76,7 +81,6 @@ export default (state = initState, action) => {
     return Object.assign({}, state);
 };
 ```
-### 通过createLiveStore,你可以创建不同的状态管理器,既可以是全局的,也可以是局部的
 
 ### store.js
 ```js
@@ -87,9 +91,9 @@ import good from './goods';
 //merge reducer
 const reducer = { project, good };
 const [useStore, applyStore] = createLiveStore(reducer);
-//or
+//globla
 export { useStore, applyStore };
-//你还可以别名
+//or ,you can alias 
 export const useCustomStore = useStore;
 export const useCustomApplyStore = applyStore;
 
@@ -98,7 +102,7 @@ export const useCustomApplyStore = applyStore;
 ```js
 import {getGoodsDataApi} from './api';
 function asyncRequest(params){
-    //异步调用
+    //async request
     const [, dispatch] = applyStore();
     getGoodsDataApi(params).then((data) => {
         const action = {type: 'update_goods_data',data: data};
