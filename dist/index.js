@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("redux"));
+		module.exports = factory(require("redux"), require("react"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "redux"], factory);
+		define(["redux", "react"], factory);
 	else if(typeof exports === 'object')
-		exports["share-store"] = factory(require("react"), require("redux"));
+		exports["share-store"] = factory(require("redux"), require("react"));
 	else
-		root["share-store"] = factory(root["React"], root["Redux"]);
+		root["share-store"] = factory(root["Redux"], root["React"]);
 })(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -112,10 +112,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createLiveStore; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createHookStore; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -140,47 +140,45 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  * 关于return []和return {}的区别,返回数组在命名时可以别名,map对象则不能
  */
 
-function createLiveStore(reducersMap) {
-  //create reducer
-  var reducer = Object(redux__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])(reducersMap);
-  var store = Object(redux__WEBPACK_IMPORTED_MODULE_1__["createStore"])(reducer, {});
+function createHookStore(reducersMap) {
+  if (arguments.length === 0) {
+    throw 'Reducer is required';
+  }
 
-  function useStore() {
+  if (arguments[0].constructor !== Object) {
+    throw 'Parameter exception,The reducer collection must be an object type, ' + 'For example:: {reducer1,reducer2,...} or {reducer}';
+  } //create reducer
+
+
+  var reducer = Object(redux__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])(reducersMap);
+  var store = Object(redux__WEBPACK_IMPORTED_MODULE_1__["createStore"])(reducer, {}); //async of dispatch
+
+  store.dispatch.async = function () {
+    if (arguments[0].constructor !== Function) {
+      throw 'param of async dispatch must is function.';
+    }
+
+    arguments[0].apply(arguments[0], [store.dispatch]);
+    return arguments[0];
+  }; //dispatch
+
+
+  var dispatch = store.dispatch;
+  return function () {
     /**
     * use hook,在组件内调用
     * const [state, dispatch] = useStore();
     */
-    var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(store.getState()),
-        _useState2 = _slicedToArray(_useState, 2),
-        state = _useState2[0],
-        updateState = _useState2[1]; //dispatch
+    var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(store.getState()),
+        _React$useState2 = _slicedToArray(_React$useState, 2),
+        state = _React$useState2[0],
+        setState = _React$useState2[1];
 
-
-    var dispatch = store.dispatch;
-    var subscribe = null;
-    Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-      subscribe = store.subscribe(function () {
-        updateState(store.getState());
-      }); //cancel subscribe
-
-      return function () {
-        return subscribe();
-      };
-    }, []);
+    store.subscribe(function () {
+      setState(store.getState());
+    });
     return [state, dispatch];
-  }
-
-  function applyStore() {
-    /**
-     * 外部函数调用,如封装的异步请求等
-     * 外部函数不能使用useStore(),因其内部使用了effect和subscribe订阅
-     * const [state, dispatch] = applyStore();
-     * 用于异步更新数据: dispatch({type: 'xxx',...});
-     */
-    return [store.getState(), store.dispatch];
-  }
-
-  return [useStore, applyStore];
+  };
 }
 
 /***/ })

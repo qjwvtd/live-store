@@ -13,9 +13,9 @@ npm install --save-dev live-store
 
 That's it!
 ```js
-import createLiveStore from 'live-store';
+import createHookStore from 'live-store';
 
-const [useStore, applyStore] = createLiveStore({reducer1,reducer2,...});
+const useStore = createHookStore({reducer1,reducer2,...});
 ```
 
 ### 注意:
@@ -27,20 +27,7 @@ useStore依赖了react的effect订阅store,所以不能在非hook组件外使用
 没有从顶层注入store的Provider,也没有绕人的connect.使用这个工具,
 你必须接受使用react hooks来开发你的项目
 
-```js
-//useStore,component inner
-function App(){
-    const [state,dispatch] = useStore();
-    return <div>{state}</div>;
-}
-//applyStore,component out
-function asyncRequest(){
-    const [state,dispatch] = applyStore();
-    setimeout(() => {
-        dispatch({type:'xxx',data: xxx});
-    },2000);
-}
-```
+
 ## Example
 ### project.js
 ```js
@@ -84,31 +71,20 @@ export default (state = initState, action) => {
 
 ### store.js
 ```js
-import createLiveStore from 'live-store';
+import createHookStore from 'live-store';
 //import reducer
 import project from './project';
 import good from './goods';
 //merge reducer
 const reducer = { project, good };
-const [useStore, applyStore] = createLiveStore(reducer);
-//globla
-export { useStore, applyStore };
-//or ,you can alias 
+const useStore = createHookStore(reducer);
+//you can alias 
 export const useCustomStore = useStore;
-export const useCustomApplyStore = applyStore;
 
 ```
 
 ```js
 import {getGoodsDataApi} from './api';
-function asyncRequest(params){
-    //async request
-    const [, dispatch] = applyStore();
-    getGoodsDataApi(params).then((data) => {
-        const action = {type: 'update_goods_data',data: data};
-        dispatch(action);
-    });
-}
 //app.js
 function App(){
     const [state, dispatch] = useStore();
@@ -118,7 +94,7 @@ function App(){
     const [state] = useStore();
     //async
     useEffect(() => {
-        asyncRequest(1);
+        dispatch.async(getGoodsDataApi());
     },[]);
     return <div>{state}</div>; 
 }
